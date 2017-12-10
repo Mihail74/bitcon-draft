@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
+    "bip39": "^2.4.0",
     "bitcoinjs-lib": "^3.3.1",
+    "crypto": "^1.0.1",
     "express": "^4.16.2"
   }
 }
