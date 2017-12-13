@@ -1,0 +1,6 @@
+{
+  "storage": {
+    "url": "mongodb://localhost:27017/bitcoin-draft"
+  },
+  "port": 3000
+}

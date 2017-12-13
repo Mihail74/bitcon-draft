@@ -1,6 +1,6 @@
 const bitcoin = require("bitcoinjs-lib")
 const bip39 = require("bip39")
-const db = require('../../db')
+// const db = require('../../db')
 
 class ChildWalletProvider {
   constructor(base58master){
@@ -19,10 +19,10 @@ class ChildWalletProvider {
 }
 //childWalletProvider.constructor.makeRandom().toBase58()
 
-db.Address.find({isMaster: true}, function (err, addresses) {
-  if (err) return console.error(err);
-  console.log(addresses);
-})
+// db.Address.find({isMaster: true}, function (err, addresses) {
+//   if (err) return console.error(err);
+//   console.log(addresses);
+// })
 
 // const key = async loadMasterKey(){
 //   await db.load(..{
@@ -36,4 +36,3 @@ db.Address.find({isMaster: true}, function (err, addresses) {
 //   return new ChildWalletProvider(key)
 // }
 // module.exports = setupWalletProvider()
-module.exports =  new ChildWalletProvider('tprv8ZgxMBicQKsPdyFHnaAgCK6sG7AYVmmg1L95QYkxXX7huKs2sj1zetgJMZDT9WxAwzvX5wRyzYzdr416f8Bmdypx8P8qrXcLuhmW7Au2D6e')

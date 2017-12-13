@@ -1,14 +1,21 @@
-
 const express = require('express')
-const app = express()
 const bodyParser = require('body-parser')
-const addressesRouting = require('./routers/addresses')
-const db = require('./db')
+const config = require('config')
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+const addressesRouting = requireRoot('src/routers/addresses')
+const models = requireRoot('src/models')
 
-app.use('/api/address', addressesRouting)
+function createApp (options) {
+  const app = express()
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(bodyParser.json())
 
+  app.use('/api/address', addressesRouting)
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+  const port = config.get('port')
+  app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+}
+
+module.exports = {
+  createApp
+}
