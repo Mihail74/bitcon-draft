@@ -1,7 +1,4 @@
-var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/bitcoin-draft', { useMongoClient: true });
-mongoose.Promise = global.Promise;
+const mongoose = require('mongoose')
 
 var Address = mongoose.model('Address', { address: String, index: Number });
 

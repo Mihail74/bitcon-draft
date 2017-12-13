@@ -1,11 +1,15 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const config = require('config')
+const mongoose = require('mongoose')
 
 const addressesRouting = requireRoot('src/routers/addresses')
 const models = requireRoot('src/models')
 
 function createApp (options) {
+  mongoose.Promise = global.Promise;
+  mongoose.connect('mongodb://localhost/bitcoin-draft', { useMongoClient: true });
+
   const app = express()
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
