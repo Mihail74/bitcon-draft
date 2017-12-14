@@ -8,8 +8,17 @@ const models = requireRoot('src/models')
 
 function createApp (options) {
   mongoose.Promise = global.Promise;
-  mongoose.connect('mongodb://localhost/bitcoin-draft', { useMongoClient: true });
+  mongoose.connect('mongodb://localhost/bitcoin-draft', { useMongoClient: true })
+    .then(() => {
+        startServer()
+    })
+    .catch(err => {
+        console.error('App starting error:', err.stack)
+        process.exit(1)
+    });
+}
 
+function startServer(){
   const app = express()
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
