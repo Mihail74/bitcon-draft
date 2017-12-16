@@ -2,7 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const config = require('config')
 const mongoose = require('mongoose')
-const serivicesInitializer = requireRoot('src/services/initializer')
+const { serivicesInitializer } = requireRoot('src/services')
+const routes = requireRoot('src/routers')
 
 async function createApp (options) {
   mongoose.Promise = global.Promise;
@@ -22,7 +23,7 @@ function startServer() {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
 
-  // app.use('/api/address', addressesRouting)
+  routes(app)
 
   const port = config.get('port')
   app.listen(port, () => console.log(`app: Example app listening on port ${port}!`))
