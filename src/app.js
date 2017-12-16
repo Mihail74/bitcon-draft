@@ -2,14 +2,13 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const config = require('config')
 const mongoose = require('mongoose')
+const serivicesInitializer = requireRoot('src/services/initializer')
 
-const addressesRouting = requireRoot('src/routers/addresses')
-const models = requireRoot('src/models')
-
-function createApp (options) {
+async function createApp (options) {
   mongoose.Promise = global.Promise;
   mongoose.connect('mongodb://localhost/bitcoin-draft', { useMongoClient: true })
-    .then(() => {
+    .then(async () => {
+        await serivicesInitializer()
         startServer()
     })
     .catch(err => {
@@ -18,15 +17,15 @@ function createApp (options) {
     });
 }
 
-function startServer(){
+function startServer() {
   const app = express()
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
 
-  app.use('/api/address', addressesRouting)
+  // app.use('/api/address', addressesRouting)
 
   const port = config.get('port')
-  app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+  app.listen(port, () => console.log(`app: Example app listening on port ${port}!`))
 }
 
 module.exports = {
