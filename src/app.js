@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const config = require('config')
 const mongoose = require('mongoose')
-const { serivicesInitializer } = requireRoot('src/services')
+const { serivicesInitializer, blocksObserver } = requireRoot('src/services')
 const routes = requireRoot('src/routers')
 
 async function createApp (options) {
@@ -10,6 +10,7 @@ async function createApp (options) {
   mongoose.connect('mongodb://localhost/bitcoin-draft', { useMongoClient: true })
     .then(async () => {
         await serivicesInitializer()
+        await blocksObserver.start()
         startServer()
     })
     .catch(err => {

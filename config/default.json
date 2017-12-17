@@ -2,5 +2,6 @@
   "storage": {
     "url": "mongodb://localhost:27017/bitcoin-draft"
   },
+  "blockexplorer": "https://testnet.blockexplorer.com",
   "port": 3000
 }
