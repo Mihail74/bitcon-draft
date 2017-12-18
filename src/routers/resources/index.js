@@ -20,7 +20,10 @@ router.post('/buy', async function (req, res) {
   const request = new requestModel({resourceID: mongoose.Types.ObjectId(resource._id), address})
   await request.save()
 
-  res.send(request.address)
+  res.send({
+    address: request.address,
+    price: resource.price
+  })
 })
 
 router.post('/get', async function (req, res) {
@@ -29,6 +32,7 @@ router.post('/get', async function (req, res) {
 
   try {
     const resource = await getResourceByToken(rawToken)
+    
     if(resource.path != resourcePath){
       res.status(404).send("Token not from the requested resource")
       return
