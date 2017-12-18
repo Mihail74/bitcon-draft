@@ -1,4 +1,4 @@
 module.exports = {
-  WAIT_PAID: "waitPaid",
-  PAID: "paid"
+  WAIT_PAID: 'waitPaid',
+  PAID: 'paid'
 }

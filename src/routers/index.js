@@ -1,7 +1,6 @@
 const resourceRouter = require('./resources')
 
-
-function routes(app){
+function routes (app) {
   app.use('/api/resource', resourceRouter)
 }
 

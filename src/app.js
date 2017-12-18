@@ -1,25 +1,26 @@
-const express = require('express')
-const bodyParser = require('body-parser')
 const config = require('config')
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const express = require('express')
+
 const { serivicesInitializer, blocksObserver } = requireRoot('src/services')
 const routes = requireRoot('src/routers')
 
-async function createApp (options) {
-  mongoose.Promise = global.Promise;
+function createApp (options) {
+  mongoose.Promise = global.Promise
   mongoose.connect('mongodb://localhost/bitcoin-draft', { useMongoClient: true })
     .then(async () => {
-        await serivicesInitializer()
-        await blocksObserver.start()
-        startServer()
+      await serivicesInitializer()
+      await blocksObserver.start()
+      startServer()
     })
     .catch(err => {
-        console.error('App starting error:', err.stack)
-        process.exit(1)
-    });
+      console.error('App starting error:', err.stack)
+      process.exit(1)
+    })
 }
 
-function startServer() {
+function startServer () {
   const app = express()
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())

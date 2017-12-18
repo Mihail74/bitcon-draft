@@ -1,16 +1,14 @@
-const mongoose = require('mongoose')
-const tokenModel = requireRoot('src/models/Token')
+const TokenModel = requireRoot('src/models/Token')
 const resourceModel = requireRoot('src/models/Resource')
 
-async function getResourceByToken(rawToken){
-  const token = await tokenModel.findOne({rawToken})
-  if(token == null) {
-    return Promise.reject('Token not found')
+async function getResourceByToken (rawToken) {
+  const token = await TokenModel.findOne({rawToken})
+  if (token == null) {
+    // TODO: throw error
+    return Promise.reject(new Error('Token not found'))
   }
 
-  const resource = await resourceModel.findOne({_id: token.resourceID})
-
-  return resource
+  resourceModel.findOne({_id: token.resourceID})
 }
 
 module.exports = {
