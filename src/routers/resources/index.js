@@ -2,14 +2,14 @@ const express = require('express')
 const mongoose = require('mongoose')
 const ResourceModel = requireRoot('src/models/Resource')
 const RequestModel = requireRoot('src/models/Request')
-const { childAddressProvider } = requireRoot('src/services')
-const { getResourceByToken } = requireRoot('src/services/resources')
+const { childAddressProvider, resourceService } = requireRoot('src/services')
 const router = express.Router()
 
 router.post('/buy', async function (req, res) {
   const resource = await ResourceModel.findOne({path: req.body.path})
 
   if (resource === null) {
+    // TODO: error handling in express
     res.status(404).send('Resource with specified path not found')
     return
   }
@@ -30,7 +30,7 @@ router.post('/get', async function (req, res) {
   const resourcePath = req.body.path
 
   try {
-    const resource = await getResourceByToken(rawToken)
+    const resource = await resourceService.getResourceByToken(rawToken)
 
     if (resource.path !== resourcePath) {
       res.status(404).send('Token not from the requested resource')

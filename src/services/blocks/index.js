@@ -4,7 +4,7 @@ const config = require('config')
 const RequestModel = requireRoot('src/models/Request')
 const ResourceModel = requireRoot('src/models/Resource')
 const RequestStatus = requireRoot('src/models/RequestStatus')
-const { issueToken } = requireRoot('src/services/tokens')
+const { tokenService } = requireRoot('src/services')
 
 class BlockObserver {
   constructor () {
@@ -37,7 +37,7 @@ class BlockObserver {
       const { balance } = await axios.get(`${this.url}/api/addr/${request.address}/balance`)
       const resource = await ResourceModel.findOne({_id: request.resourceID})
       if (resource.price < balance) {
-        await issueToken(resource._id)
+        await tokenService.issueToken(resource._id)
         await RequestModel.update({ _id: request.id }, { status: RequestStatus.PAID })
       }
     })
