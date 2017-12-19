@@ -4,12 +4,12 @@ const resourceModel = requireRoot('src/models/Resource')
 class ResourceService {
   async getResourceByToken (rawToken) {
     const token = await TokenModel.findOne({rawToken})
-    if (token == null) {
-      // TODO: throw error
-      return Promise.reject(new Error('Token not found'))
+
+    if (token === null) {
+      throw new Error('Token not found')
     }
 
-    resourceModel.findOne({_id: token.resourceID})
+    return resourceModel.findOne({_id: token.resourceID})
   }
 }
 

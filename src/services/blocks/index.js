@@ -4,22 +4,26 @@ const config = require('config')
 const RequestModel = requireRoot('src/models/Request')
 const ResourceModel = requireRoot('src/models/Resource')
 const RequestStatus = requireRoot('src/models/RequestStatus')
-const { tokenService } = requireRoot('src/services')
+const tokenService = requireRoot('src/services/tokens')
 
 class BlockObserver {
   constructor () {
-    this.url = config.get('blockexplorer')
+    this.axios = axios.create({
+      baseURL: config.get('blockexplorer')
+    })
   }
 
-  async start () {
+  start () {
+    this.handlePaidRequests()
+
     const eventToListenTo = 'block'
     const room = 'inv'
 
     var self = this
 
-    var socket = io(this.url)
+    var socket = io(config.get('blockexplorer'))
     socket.on('connect', function () {
-      console.log(`BlockObserver: subscribed for new block from ${self.url}`)
+      console.log(`BlockObserver: subscribed for new block from ${config.get('blockexplorer')}`)
       // Join the room.
       socket.emit('subscribe', room)
     })
@@ -32,9 +36,8 @@ class BlockObserver {
 
   async handlePaidRequests () {
     const waitPaidRequestList = await RequestModel.find({status: RequestStatus.WAIT_PAID})
-
     waitPaidRequestList.forEach(async request => {
-      const { data: balance } = await axios.get(`${this.url}/api/addr/${request.address}/balance`)
+      const { data: balance } = await this.axios.get(`/api/addr/${request.address}/balance`)
       const resource = await ResourceModel.findOne({_id: request.resourceID})
       if (resource.price < balance) {
         await tokenService.issueToken(resource._id)

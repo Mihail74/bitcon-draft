@@ -16,7 +16,7 @@ function createApp (options) {
     })
     .catch(err => {
       console.error('App starting error:', err.stack)
-      process.exit(1)
+      throw err
     })
 }
 

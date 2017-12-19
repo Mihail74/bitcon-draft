@@ -5,12 +5,13 @@ const RequestModel = requireRoot('src/models/Request')
 const { childAddressProvider, resourceService } = requireRoot('src/services')
 const router = express.Router()
 
-router.post('/buy', async function (req, res) {
+router.post('/buy', async function (req, res, next) {
   const resource = await ResourceModel.findOne({path: req.body.path})
 
   if (resource === null) {
-    // TODO: error handling in express
-    res.status(404).send('Resource with specified path not found')
+    let error = new Error(`Resource with path = ${req.body.path} not found`)
+    error.statusCode = 404
+    next(error)
     return
   }
 
@@ -25,7 +26,7 @@ router.post('/buy', async function (req, res) {
   })
 })
 
-router.post('/get', async function (req, res) {
+router.post('/get', async function (req, res, next) {
   const rawToken = req.body.token
   const resourcePath = req.body.path
 
@@ -33,13 +34,16 @@ router.post('/get', async function (req, res) {
     const resource = await resourceService.getResourceByToken(rawToken)
 
     if (resource.path !== resourcePath) {
-      res.status(404).send('Token not from the requested resource')
+      let error = new Error(`Resource with path = ${req.body.path} not found`)
+      error.statusCode = 404
+      next(error)
       return
     }
 
     res.send(resource.content)
-  } catch (e) {
-    res.status(404).send('Token incorrect')
+  } catch (error) {
+    error.statusCode = 404
+    next(error)
   }
 })
 
