@@ -34,7 +34,7 @@ class BlockObserver {
     const waitPaidRequestList = await RequestModel.find({status: RequestStatus.WAIT_PAID})
 
     waitPaidRequestList.forEach(async request => {
-      const { balance } = await axios.get(`${this.url}/api/addr/${request.address}/balance`)
+      const { data: balance } = await axios.get(`${this.url}/api/addr/${request.address}/balance`)
       const resource = await ResourceModel.findOne({_id: request.resourceID})
       if (resource.price < balance) {
         await tokenService.issueToken(resource._id)
