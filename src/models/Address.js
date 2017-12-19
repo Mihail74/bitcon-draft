@@ -5,7 +5,8 @@ const Address = new mongoose.Schema({
   base58: String,
   index: Number,
   address: String,
-  nodeNumber: Number
+  nodeNumber: Number,
+  coinType: Number
 })
 
 module.exports = mongoose.model('Address', Address)
