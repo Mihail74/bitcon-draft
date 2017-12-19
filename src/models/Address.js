@@ -4,7 +4,8 @@ const Address = new mongoose.Schema({
   isMaster: Boolean,
   base58: String,
   index: Number,
-  address: String
+  address: String,
+  nodeNumber: Number
 })
 
 module.exports = mongoose.model('Address', Address)
