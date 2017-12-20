@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'bitcoin-draft',
+      name: 'bitcoin-experiment',
       script: 'bin/www',
       watch: true,
       env: {
