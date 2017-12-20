@@ -73,7 +73,3 @@ class ChildAddressProvider {
 }
 
 module.exports = new ChildAddressProvider()
-
-// tprv8ZgxMBicQKsPdyFHnaAgCK6sG7AYVmmg1L95QYkxXX7huKs2sj1zetgJMZDT9WxAwzvX5wRyzYzdr416f8Bmdypx8P8qrXcLuhmW7Au2D6e
-// mkWJVxmxEELe3mhaQxt39GAJVfkKb4b9hT
-// coinType: 1
