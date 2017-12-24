@@ -2,5 +2,15 @@
 require('dotenv').config()
 require('../require')
 
-const { createApp } = requireRoot('src/app')
-createApp()
+const { createApp } = requireRoot('lib/app')
+const initializeServices = requireRoot('lib/services/initializer')
+
+createApp().start({
+  onStart: async () => {
+    console.log('Server successfully start')
+    await initializeServices()
+
+    const blockObserver = requireRoot('lib/services/BlockObserver')
+    blockObserver.start()
+  }
+})

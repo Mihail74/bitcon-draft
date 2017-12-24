@@ -10,17 +10,6 @@
 - config/default.json
 - config/production.json
 
-4. Insert in `addresses` collection in **mongodb**
-```
-{
-    "base58" : "tprv8ZgxMBicQKsPdyFHnaAgCK6sG7AYVmmg1L95QYkxXX7huKs2sj1zetgJMZDT9WxAwzvX5wRyzYzdr416f8Bmdypx8P8qrXcLuhmW7Au2D6e",
-    "isMaster" : true,
-    "index" : 0,
-    "coinType" : 1,
-    "address" : "mkWJVxmxEELe3mhaQxt39GAJVfkKb4b9hT"
-}
-```
-
 ## Setup & Run
 
 ``` bash
