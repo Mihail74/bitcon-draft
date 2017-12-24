@@ -1,9 +1,18 @@
 {
-  "storage": {
-    "url": "mongodb://localhost:27017/bitcoin-draft"
+  "keystone": {
+    "cookieSecret": "place-your-cookie-secret-here"
   },
+
+  "storage": {
+    "url": "mongodb://localhost:27017/bitcoin-experiment"
+  },
+
   "blockexplorer": "https://testnet.blockexplorer.com",
   "port": 3000,
-  "testnet" : true,
-  "nodeNumber": 1
+  "nodeNumber": 1,
+
+  "bitcoin": {
+    "testnet" : true,
+    "masterBase58": "tprv8ZgxMBicQKsPdyFHnaAgCK6sG7AYVmmg1L95QYkxXX7huKs2sj1zetgJMZDT9WxAwzvX5wRyzYzdr416f8Bmdypx8P8qrXcLuhmW7Au2D6e"
+  }
 }
