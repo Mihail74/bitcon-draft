@@ -10,7 +10,7 @@ createApp().start({
     console.log('Server successfully start')
     await initializeServices()
 
-    const blockObserver = requireRoot('lib/services/BlockObserver')
+    const { blockObserver } = requireRoot('lib/services')
     blockObserver.start()
   }
 })
